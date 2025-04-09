@@ -15,7 +15,7 @@ A powerful AI-based text translator using ChatGPT API. This package provides an 
 ## Installation
 
 ```bash
-pip install openai-trans
+pip install openaitrans
 ```
 
 ## Usage
@@ -35,14 +35,14 @@ OPENAI_API_KEY=your-api-key-here
 ### Basic Usage
 
 ```python
-from openai_trans import ai_translator
+from openaitrans import translator
 
 # Simple translation (auto-detect source language to Persian)
-result = ai_translator.translate("Hello, how are you?")
+result = translator.translate("Hello, how are you?")
 print(result.result)
 
 # Specify source and target languages
-result = ai_translator.translate(
+result = translator.translate(
     "Hello, how are you?",
     t_from="en",
     t_to="fr"
@@ -50,15 +50,24 @@ result = ai_translator.translate(
 print(result.result)
 
 # Streaming translation
-for chunk in ai_translator.stream_translate():
+for chunk in translator.stream_translate():
     print(chunk)
 ```
 
 ### Advanced Usage
 
 ```python
+from openaitrans import Translator
+
+# Create a custom translator instance with specific settings
+custom_translator = Translator(
+    model="gpt-4",
+    temperature=0.7,
+    max_tokens=1000
+)
+
 # Translate with specific formatting
-result = ai_translator.translate(
+result = custom_translator.translate(
     "Hello, how are you?",
     t_from="en",
     t_to="fr",
@@ -66,14 +75,14 @@ result = ai_translator.translate(
 )
 
 # Get token usage information
-print(ai_translator.token_usage)
+print(custom_translator.token_usage)
 ```
 
 ## API Reference
 
-### `AITranslator` Class
+### `Translator` Class
 
-The main class for translation operations.
+The main class for translation operations. Use this when you need custom settings.
 
 #### Methods
 
@@ -87,6 +96,17 @@ The main class for translation operations.
 - `model`: OpenAI model to use (default: "gpt-4o-mini")
 - `t_to`: Target language code
 - `t_from`: Source language code
+
+### Default Instance
+
+The package provides a default `translator` instance for quick and easy use:
+
+```python
+from openaitrans import translator
+
+# Use the default instance
+result = translator.translate("Hello, how are you?")
+```
 
 ## License
 
